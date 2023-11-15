@@ -1,12 +1,14 @@
-import nltk
-from nltk.corpus import gutenberg
 import tkinter as tk
 from tkinter import simpledialog, messagebox
+from PIL import Image, ImageTk
+import nltk
+from nltk.corpus import gutenberg
 
 nltk.download('gutenberg')
+nltk.download('punkt')
 
 def obtener_titulos():
-    return [titulo.replace('.txt', '').replace('-', ' ').title() for titulo in gutenberg.fileids()]
+    return gutenberg.fileids()
 
 def obtener_autor(titulo):
     for fileid in gutenberg.fileids():
@@ -39,6 +41,17 @@ def obtener_resumen_interfaz():
 
 root = tk.Tk()
 root.title("Consulta de libros de Gutenberg")
+
+ancho_pantalla = root.winfo_screenwidth()
+alto_pantalla = root.winfo_screenheight()
+
+background_image = Image.open("fondo2.jpg") 
+
+background_photo = ImageTk.PhotoImage(background_image)
+background_label = tk.Label(root, image=background_photo)
+background_label.place(relwidth=1, relheight=1)
+
+root.resizable(width=False, height=False)
 
 label_titulos = tk.Label(root, text="Títulos:")
 label_titulos.grid(row=0, column=0, padx=10, pady=10)
